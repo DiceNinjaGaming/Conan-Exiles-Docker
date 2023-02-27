@@ -22,6 +22,15 @@ WORKDIR /steam
 RUN wget https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
   && tar xvf steamcmd_linux.tar.gz
 
+# Install mcRcon
+WORKDIR /mcrcon
+RUN curl -s https://api.github.com/repos/Tiiffi/mcrcon/releases/latest \
+| grep "browser_download_url.*64.tar.gz" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
+RUN tar -xvzf *64.tar.gz
+
 # Set up server folders
 WORKDIR /app
 RUN mkdir -p ./backups
@@ -33,22 +42,29 @@ COPY ./configs/supervisord.conf /etc
 
 # Copy scripts
 WORKDIR /scripts
-COPY ./scripts/Entrypoint.ps1 .
-COPY ./scripts/Start-Server.ps1 .
-COPY ./scripts/Start-BackupService.ps1 .
-COPY ./scripts/Start-UpdateService.ps1 .
+COPY ./scripts/ .
+
+WORKDIR /tmp
 
 # Set up server defaults
 ENV STEAM_APPID="443030" \
+    SERVER_PROCESS_NAME="notepad" \ 
+    SERVER_PORT="1234" \ 
+    SERVER_NAME="Default Server Name" \
+    SERVER_PASSWORD="DefaultPassword" \
+    TEMP_FOLDER="/tmp" \
     TZ="Etc/UTC" \
     FILE_UMASK="022" \
-    PORT_GAME="7777" \
     BACKUPS_ENABLED="True" \
     BACKUPS_MAX_AGE=3 \
     BACKUPS_MAX_COUNT=0 \
     BACKUPS_INTERVAL=360 \
     UPDATES_ENABLED="True" \
-    UPDATES_INTERVAL=15
+    UPDATES_WHILE_USERS_CONNECTED="False" \
+    UPDATES_INTERVAL=15 \
+    RCON_PORT=25575 \
+    RCON_PASSWORD="ChangeThisPasswordIfUsingRCON" \
+    RCON_MAX_KARMA=60
 
 # HEALTHCHECK CMD sv status ddns | grep run || exit 1
 
