@@ -8,10 +8,14 @@ RUN apt-get install -y wget apt-transport-https software-properties-common
 RUN wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
 RUN dpkg -i packages-microsoft-prod.deb
 
+# Prepare for Wine
+RUN dpkg --add-architecture i386 
+
 # Update and install misc packages
 RUN apt-get update
 RUN apt-get install --no-install-recommends --no-install-suggests -y \
-    powershell lib32gcc-s1 curl ca-certificates locales supervisor zip
+    powershell lib32gcc-s1 curl ca-certificates locales supervisor zip \
+    wine64 wine32 winetricks
 
 # Install SteamCMD
 WORKDIR /steam
@@ -35,7 +39,7 @@ COPY ./scripts/Start-BackupService.ps1 .
 COPY ./scripts/Start-UpdateService.ps1 .
 
 # Set up server defaults
-ENV STEAM_APPID="00000" \
+ENV STEAM_APPID="443030" \
     TZ="Etc/UTC" \
     FILE_UMASK="022" \
     PORT_GAME="7777" \

@@ -4,7 +4,7 @@ $serverLocation = '/app/server'
 
 function RunSteamCMD()
 {
-  /steam/steamcmd.sh +force_install_dir "$serverLocation" +login anonymous +app_update $STEAM_APPID $UPDATES_STEAMCMD_ARGS +quit
+  /steam/steamcmd.sh +@sSteamCmdForcePlatformType windows +force_install_dir "$serverLocation" +login anonymous +app_update $STEAM_APPID $UPDATES_STEAMCMD_ARGS +quit
 }
 
 function RunUpdate()

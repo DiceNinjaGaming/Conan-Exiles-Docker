@@ -1,12 +1,12 @@
-# baseimage
-A base image for game servers
+# Conan Exiles Docker
+A Docker image for hosting a Conan Exiles server.
 
 # System Requirements
 | Name | Description |
 | - | - |
-| Processor | TBD |
-| Memory | TBD |
-| Storage | TBD |
+| Processor | 3.0+ GHz, Intel Core 2 Duo 6850 or better |
+| Memory | 8GB |
+| Storage | 35+ GB |
 | Internet Connection | Broadband internet connection. Hosting from home will require the ability to configure port forwarding |
 
 # Important folders
