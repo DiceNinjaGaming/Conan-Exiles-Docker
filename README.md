@@ -32,7 +32,7 @@ removed after all the steps have been taken.
 | - | - |
 | Processor | 3.0+ GHz, Intel Core 2 Duo 6850 or better |
 | Memory | 8GB |
-| Storage | 35+ GB |
+| Storage | 40+ GB |
 | Internet Connection | Broadband internet connection. Hosting from home will require the ability to configure port forwarding |
 
 # Important folders

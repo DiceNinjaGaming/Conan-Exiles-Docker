@@ -15,11 +15,20 @@ While (RunServer)
       # We only want to copy the configs the first time the container starts
       if ($copyConfigs)
       {
+        Write-Output 'Copying config files'
         Copy-Configs
+        Write-Output 'Applying specified config changes (if any)'
         Configure-Server
+        Write-Output 'Finished applying server configuration'
         $copyConfigs = $false
       }
-      & screen xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine $serverLauncherPath -log
+      Write-Ouput 'Starting server'
+      $env:DISPLAY=':99'
+      $invocation = "-Command & {xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine $serverLauncherPath -log}"
+      Start-Process pwsh -ArgumentList $invocation -NoNewWindow -Wait -Passthru
+
+      #xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' exec wine $serverLauncherPath -log
+      Write-Output 'Server exited'
     } # if (Test-Path $serverLauncherPath)
   }
   else
