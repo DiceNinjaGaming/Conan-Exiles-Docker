@@ -46,7 +46,7 @@ RUN mkdir -p ./logs
 # Copy configs
 COPY ./configs/supervisord.conf /etc
 # If the workdir changes, also update it in Config-Tools
-WORKDIR /app/default-configs
+WORKDIR /app/configs
 COPY ./configs/game-configs/ .
 
 # Copy scripts

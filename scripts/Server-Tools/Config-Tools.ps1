@@ -1,7 +1,15 @@
-$defaultConfigDirectory='/app/default-configs/'
+$defaultConfigDirectory='/app/configs/'
 $destinationConfigDirectory=(Join-Path '/app/server' 'ConanSandbox\Saved\Config\WindowsServer')
+$configFiles=@{
+  'Game.ini'=(Join-Path $destinationConfigDirectory 'Game.ini')
+  'Engine.ini'=(Join-Path $destinationConfigDirectory 'Engine.ini')
+  'Server.ini'=(Join-Path $destinationConfigDirectory 'Server.ini')
+}
 
 function Copy-Configs
 {
-  Copy-Item (Join-Path $defaultConfigDirectory '*') -Destination $destinationConfigDirectory
+  foreach ($file in $configFiles)
+  {
+    Copy-Item (Join-Path $defaultConfigDirectory $file.Name) $file.Value
+  }
 }
