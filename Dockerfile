@@ -17,7 +17,7 @@ RUN dpkg --add-architecture i386
 RUN apt-get update
 RUN apt-get install --no-install-recommends --no-install-suggests -y \
     powershell lib32gcc-s1 curl ca-certificates locales supervisor zip \
-    wine64 wine32 winetricks
+    wine64 wine32 winetricks screen xvfb
 
 # Install SteamCMD
 WORKDIR /steam
