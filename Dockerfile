@@ -10,17 +10,18 @@ RUN apt-get install -y wget apt-transport-https software-properties-common
 RUN wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
 RUN dpkg -i packages-microsoft-prod.deb
 
-# Prepare for Wine
-RUN dpkg --add-architecture i386 
-
 # Update and install misc packages
 RUN apt-get update
 RUN apt-get install --no-install-recommends --no-install-suggests -y \
-    powershell lib32gcc-s1 curl ca-certificates locales supervisor zip \
-    wine64 wine32 winetricks screen xvfb
+    powershell lib32gcc-s1 curl ca-certificates locales supervisor zip
 
 # Install wine, if necessary
-# RUN apt-get install -y wine64 wine32 winetricks screen xvfb
+WORKDIR /etc/apt/keyrings
+RUN dpkg --add-architecture i386 
+RUN wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
+RUN wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources
+RUN apt-get update
+RUN apt-get install --install-recommends -y winehq-stable winetricks screen xvfb
 
 # Install SteamCMD
 WORKDIR /steam
@@ -56,7 +57,7 @@ WORKDIR /tmp
 
 # Set up server defaults
 ENV STEAM_APPID="443030" \
-    SERVER_PROCESS_NAME="notepad" \ 
+    SERVER_PROCESS_NAME="ConanSandboxServer" \ 
     SERVER_PORT="1234" \ 
     SERVER_NAME="Default Server Name" \
     SERVER_PASSWORD="DefaultPassword" \
