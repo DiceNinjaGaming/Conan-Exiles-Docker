@@ -13,3 +13,13 @@ function Copy-Configs
     Copy-Item (Join-Path $defaultConfigDirectory $file.Name) $file.Value
   }
 }
+
+function Update-ConfigFile
+{
+  
+}
+
+function Configure-Server
+{
+  
+}
