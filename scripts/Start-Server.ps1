@@ -24,9 +24,10 @@ While (RunServer)
       }
       Write-Ouput 'Starting server'
       $env:DISPLAY=':99'
-      $invocation = "-Command & {xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine $serverLauncherPath -log}"
-      Start-Process pwsh -ArgumentList $invocation -NoNewWindow -Wait -Passthru
+      #$invocation = "-Command & {xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine $serverLauncherPath -log}"
+      #Start-Process pwsh -ArgumentList $invocation -NoNewWindow -Wait -Passthru
 
+      bash xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' wine $serverLauncherPath -log
       #xvfb-run --auto-servernum --server-args='-screen 0 640x480x24:32' exec wine $serverLauncherPath -log
       Write-Output 'Server exited'
     } # if (Test-Path $serverLauncherPath)
